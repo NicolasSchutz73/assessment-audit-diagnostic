@@ -2,7 +2,7 @@ import pool from "../config/database";
 import { Task, TaskCreateDto, TaskFilters, TaskStatus } from "../models/Task";
 
 export class TaskRepository {
-  async findAll(filters?: TaskFilters): Promise<Task[]> {
+  async findAll(filters?: TaskFilters, limit: number = 50, offset: number = 0): Promise<Task[]> {
     let query = "SELECT * FROM tasks WHERE 1=1";
     const params: any[] = [];
     let paramIndex = 1;
@@ -20,6 +20,8 @@ export class TaskRepository {
     }
 
     query += " ORDER BY created_at DESC";
+    query += ` LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
+    params.push(limit, offset);
 
     const result = await pool.query(query, params);
     return result.rows;

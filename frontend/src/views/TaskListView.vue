@@ -89,19 +89,6 @@ const newTask = ref({
   description: ''
 })
 
-const heavyComputation = () => {
-  const start = performance.now()
-  let result = 0
-
-  // Simulation de calcul intensif
-  for (let i = 0; i < 10000000; i++) {
-    result += Math.sqrt(i) * Math.random()
-  }
-
-  const end = performance.now()
-  console.log(`Heavy computation took ${end - start}ms, result: ${result}`)
-}
-
 const loadTasks = async () => {
   try {
     loading.value = true
@@ -157,7 +144,6 @@ const stopTimer = async (taskId: number) => {
 }
 
 onMounted(() => {
-  heavyComputation()
   loadTasks()
 })
 </script>
